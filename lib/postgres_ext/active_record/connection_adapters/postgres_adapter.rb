@@ -12,13 +12,13 @@ module ActiveRecord
       include PgArrayParser
       attr_accessor :array
 
-      def initialize_with_extended_types(name, default, sql_type = nil, null = true)
+      def initialize_with_extended_types(name, default, oid_type = nil, sql_type = nil, null = true)
         if sql_type =~ /\[\]$/
           @array = true
-          initialize_without_extended_types(name, default, sql_type[0..sql_type.length - 3], null)
+          initialize_without_extended_types(name, default, oid_type, sql_type[0..sql_type.length - 3], null)
           @sql_type = sql_type
         else
-          initialize_without_extended_types(name,default, sql_type, null)
+          initialize_without_extended_types(name, default, oid_type, sql_type, null)
         end
       end
       alias_method_chain :initialize, :extended_types
